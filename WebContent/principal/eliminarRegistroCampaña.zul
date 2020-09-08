@@ -1,0 +1,49 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winListaCampania" ?>
+<zk>
+	<window id="winListaCampania" border="none" hflex="1" vflex="1"
+		apply="ec.edu.upse.controlador.EliminarRegistroCampaniaC">
+		<vlayout vflex="1">
+			<hlayout hflex="1">
+				<vlayout>
+					<label value="Campaña" />
+					<combobox id="cboCampania"
+						model="@{winListaCampania$composer.listaCampania}">
+						<template name="model">
+							<comboitem label="${each.nombreCampania}" />
+						</template>
+					</combobox>
+				</vlayout>
+				<vlayout>
+					<div align="center">
+							<button id="btnBuscar" label="Buscar!"
+								iconSclass="z-icon-search" />
+					</div>
+				</vlayout>
+			</hlayout>
+			<hlayout vflex="1" hflex="1">
+				<listbox id="lstRegistro"
+					model="@{winListaCampania$composer.registro}" hflex="1" vflex="1"
+					selectedItem="@{winListaCampania$composer.registroSeleccionado}">
+					<listhead>
+						<listheader label="Cédula" />
+						<listheader label="Nombres" />
+						<listheader label="Fecha" />
+						<listheader label="Usuario" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${each.persona.cedula}" />
+							<listcell
+								label="${each.persona.nombre} ${each.persona.apellido}" />
+							<listcell label="${each.fecha}" />
+							<listcell label="${each.observacion}" />
+						</listitem>
+					</template>
+				</listbox>
+			</hlayout>
+			<hlayout hflex="1">
+				<button id="btnEliminar" label="Eliminar" />
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>

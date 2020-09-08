@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptEstadisticoSangre" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="918748a4-aa8e-4886-b4ba-67df0a0d9089">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT ps.descripcion,((count(*) * 100)/(select COUNT(*) from persona)) as porcentaje
+FROM persona p, parametrica ps
+WHERE p.id_grupo_sanguineo = ps.id_parametrica
+GROUP BY ps.descripcion]]>
+	</queryString>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parametrica"/>
+	</field>
+	<field name="porcentaje" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="porcentaje"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="27" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="260" splitType="Stretch">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="170" y="10" width="200" height="200" uuid="d9d1cfac-5641-4e2d-8400-4db9baa9588e"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{descripcion}]]></keyExpression>
+					<valueExpression><![CDATA[$F{porcentaje}]]></valueExpression>
+					<labelExpression><![CDATA[$F{descripcion}]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement x="130" y="230" width="100" height="30" uuid="938eaf2e-a185-492e-977d-c09783bd2a95">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83d8d419-7f4e-464b-a868-c6a7581ce352"/>
+				</reportElement>
+				<text><![CDATA[descripcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="230" width="100" height="30" uuid="441b434d-d0ba-498e-8418-95492d551f97">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af8d8f9b-20f3-4d17-ab5a-2638c0f120b3"/>
+				</reportElement>
+				<text><![CDATA[porcentaje]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="130" y="0" width="100" height="30" uuid="2d2168e1-82cb-4891-ad27-146551ed3d19">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83d8d419-7f4e-464b-a868-c6a7581ce352"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="100" height="30" uuid="903a1596-32c1-4657-9e7e-143706f63761">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af8d8f9b-20f3-4d17-ab5a-2638c0f120b3"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{porcentaje}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

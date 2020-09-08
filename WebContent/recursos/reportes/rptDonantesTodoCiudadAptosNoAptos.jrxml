@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptDonantesAptos" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="81f1e5bc-b444-4172-85e6-54499e63bd7b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion MySQL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="TITULO" class="java.lang.String"/>
+	<parameter name="FACULTAD" class="java.lang.String"/>
+	<parameter name="FACSISTEL" class="java.lang.String"/>
+	<parameter name="PROYECTO" class="java.lang.String"/>
+	<parameter name="CIUDAD" class="java.lang.String"/>
+	<parameter name="TIPO_SANGRE" class="java.lang.String"/>
+	<parameter name="FECHA_EMISION" class="java.lang.String"/>
+	<parameter name="LOGO_FACSISTEL" class="java.lang.Object"/>
+	<parameter name="LOGO_ENFERMERIA" class="java.lang.Object"/>
+	<parameter name="ID_SANGRE" class="java.lang.Integer"/>
+	<parameter name="ID_PROVINCIA" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT p.cedula,CONCAT(p.apellido, ' ',p.nombre) As Nombre ,TIMESTAMPDIFF(YEAR,p.fecha_nacimiento,CURDATE()) AS edad,pciudad.descripcion as ciudad,p.direccion,p.telefono,p.celular,psexo.codigo as sexo,
+p.email,
+		(IF((select res.id_registro from registro_donacion res where res.id_persona = p.id_persona order by res.id_registro desc limit 1) IS NULL, "NO TIENE",(select pr.descripcion
+          from registro_donacion re, parametrica pr where re.id_captado = pr.id_parametrica 
+         and re.id_persona = p.id_persona order by re.id_registro desc limit 1))) as captado,
+psangre.descripcion as sangre,(IF((select count(*) from registro_donacion rh where rh.id_persona = p.id_persona) > 1, "CONTINUO", "PRIMERA VEZ")) as estado
+
+FROM persona p, parametrica psexo, parametrica pciudad, parametrica psangre
+where p.id_canton = pciudad.id_parametrica and p.id_canton IN (select prov.id_parametrica from parametrica prov where prov.id_parametrica_padre =  $P{ID_PROVINCIA} )
+and p.id_sexo = psexo.id_parametrica and p.id_grupo_sanguineo = psangre.id_parametrica and p.id_grupo_sanguineo =  $P{ID_SANGRE}  and p.estado = 'A'
+order by p.apellido asc]]>
+	</queryString>
+	<field name="cedula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="persona"/>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Nombre"/>
+	</field>
+	<field name="edad" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="edad"/>
+	</field>
+	<field name="ciudad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ciudad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parametrica"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="persona"/>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefono"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="persona"/>
+	</field>
+	<field name="celular" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="celular"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="persona"/>
+	</field>
+	<field name="sexo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sexo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parametrica"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="persona"/>
+	</field>
+	<field name="captado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="captado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parametrica"/>
+	</field>
+	<field name="sangre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sangre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="parametrica"/>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="73" splitType="Stretch">
+			<textField>
+				<reportElement x="85" y="0" width="640" height="15" uuid="aac4cf8b-4cca-4483-9abb-697c3fd059b5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="16" width="640" height="16" uuid="2a33ce29-57f8-4341-b49d-0234fe3e6cab"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FACULTAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="33" width="640" height="15" uuid="0572f256-4800-4baf-b0d1-78eeeb8185e8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FACSISTEL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="48" width="640" height="15" uuid="da9a2686-37af-497e-9f8b-8deb02e6f51e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PROYECTO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-6" y="67" width="820" height="1" uuid="40637366-a75b-4e41-a639-9535212370ff"/>
+			</line>
+			<image>
+				<reportElement x="-6" y="-6" width="76" height="70" uuid="e530ef02-b963-4ca8-aa9c-5138ff04045c"/>
+				<imageExpression><![CDATA[$P{LOGO_FACSISTEL}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="734" y="-6" width="80" height="72" uuid="ad9f2bc7-6d97-4394-a891-51e07e053d71"/>
+				<imageExpression><![CDATA[$P{LOGO_ENFERMERIA}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-3" width="800" height="21" uuid="6b7644f9-c202-403a-a61c-0fe5c25ebf40"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE DONANTES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-12" width="100" height="15" uuid="de65da94-1cc6-43ba-bb12-22453b7b317e"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciudad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="3" width="100" height="15" uuid="03d1125b-3a52-43e2-8a4b-55503b52ba77"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Sangre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="3" width="100" height="15" uuid="e3c05af2-da75-4495-96ff-99c942875ff6"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="-12" width="376" height="15" uuid="18db606d-4932-4598-9672-3779156d0e8b"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CIUDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="3" width="376" height="15" uuid="6af18f16-319e-40f0-b674-c1742cb842e1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TIPO_SANGRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="3" width="200" height="15" uuid="8c96c297-bfc0-4483-bc2b-061f08d62826"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA_EMISION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="20" width="55" height="23" uuid="4141431e-f0f0-466c-8c10-021963e3dbd1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38823856-2405-4111-b13f-16cf65b821e9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÉDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="87" y="20" width="110" height="23" uuid="76e11fdf-6775-4fb3-9005-4573ffa6ba71">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="17f6f8cc-b8e5-4a3c-b611-82ed02c807c9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS Y NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="20" width="30" height="23" uuid="6bbc7c17-340b-4581-8522-86687a4b6a63">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f1e1c59-6601-4613-9339-9ac88432ec50"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="20" width="27" height="23" uuid="f0e6d334-f698-4f36-9630-6ff4af9f33a6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd82b27f-2e5f-4ea6-afe3-c3941a317bc5"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEXO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="20" width="60" height="23" uuid="6252da2b-70ed-4386-97dd-f67a50cd9cc5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fa4d7da8-7c18-4958-83d1-fa609ee42356"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESIDENCIA ACTUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="437" y="20" width="62" height="23" uuid="4f7c66ac-4509-4033-9125-f2702a83fea0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4dfd65c-ece9-4776-88eb-42948ca5ae75"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELÉFONO CONVENCIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="502" y="20" width="55" height="23" uuid="11a59450-ee2d-4550-b2a2-f95bc88dbbd1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d39e842d-6f6f-4ba9-af34-0931dffe4c59"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CELULAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="559" y="20" width="70" height="23" uuid="23ea00fc-0cad-4184-bf0a-ec5e362433c2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0b446605-1070-45d6-8266-30f446612f03"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[E-MAIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="630" y="20" width="54" height="23" uuid="929e2327-2c9b-4fb8-aa71-276488dd0ae9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4263b1c6-0c03-47c8-ac76-093c8c16b561"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAPTADO POR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="687" y="20" width="50" height="23" uuid="be805ea0-1c80-41b6-8251-9c620fbd1e0c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b99fd25d-35d0-43ee-b665-c58dd88961b4"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GRUPO SANGUÍNEO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="739" y="20" width="73" height="23" uuid="fec8f614-03ee-4c07-9ea1-58644e2f9122">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4547b09d-1165-4605-91c6-8b1b28221090"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DONANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="20" width="110" height="23" uuid="eaa15d46-a9a8-40a7-9127-beb7617dd804">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62f44ca7-9c08-4653-8cf1-18d6fb9781f2"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN DOMICILIARIA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-6" y="20" width="820" height="1" uuid="71576aee-2f97-4e5b-aa02-5771b449fa79"/>
+			</line>
+			<line>
+				<reportElement x="-6" y="43" width="820" height="1" uuid="7f38b5a1-0255-42f3-ad2b-6676d1f65380"/>
+			</line>
+			<staticText>
+				<reportElement x="-5" y="21" width="34" height="23" uuid="b1a02921-1a26-4bb5-9982-d3681dcaa572">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38823856-2405-4111-b13f-16cf65b821e9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="29" y="-1" width="55" height="23" uuid="05166fa3-7811-463b-a96b-74e8f01a8dda">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38823856-2405-4111-b13f-16cf65b821e9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="-1" width="110" height="23" uuid="410c1ddc-f93d-45df-bad3-2bad8320dd1e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="17f6f8cc-b8e5-4a3c-b611-82ed02c807c9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="-1" width="30" height="23" uuid="6be5711b-73dd-47b5-a5aa-1ed548d8a9fc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f1e1c59-6601-4613-9339-9ac88432ec50"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="-1" width="27" height="23" uuid="2abc5c04-7f1c-4a50-9691-9db3077be565">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fd82b27f-2e5f-4ea6-afe3-c3941a317bc5"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="263" y="-1" width="60" height="23" uuid="98d8eff9-34cc-4918-8ee3-3b9aee788713">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fa4d7da8-7c18-4958-83d1-fa609ee42356"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ciudad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="-1" width="62" height="23" uuid="518dbb6e-d716-4f3d-95ce-0b2258f8ce32">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4dfd65c-ece9-4776-88eb-42948ca5ae75"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="502" y="-1" width="55" height="23" uuid="0e1d5a21-e7e4-4698-aa52-b8a6f35e9373">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d39e842d-6f6f-4ba9-af34-0931dffe4c59"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{celular}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="559" y="-1" width="70" height="23" uuid="be0ed2eb-6bf8-4728-8e96-f1ca490d5156">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0b446605-1070-45d6-8266-30f446612f03"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="630" y="1" width="54" height="23" uuid="70dc2324-023b-415f-9be6-8756064b9b42">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4263b1c6-0c03-47c8-ac76-093c8c16b561"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{captado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="687" y="-1" width="50" height="23" uuid="7314225d-20cd-4a41-a7b8-8073268e3062">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b99fd25d-35d0-43ee-b665-c58dd88961b4"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sangre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="739" y="-1" width="72" height="23" uuid="f519a71c-d440-4ffa-9ce8-dd28a24a928f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4547b09d-1165-4605-91c6-8b1b28221090"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="-1" width="110" height="23" uuid="01b2b7c7-2755-492d-b258-8723b4312481">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62f44ca7-9c08-4653-8cf1-18d6fb9781f2"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-6" y="23" width="820" height="1" uuid="944cc17d-a982-41bb-b25d-4302db6cdf54"/>
+			</line>
+			<line>
+				<reportElement x="-6" y="-24" width="1" height="47" uuid="671abf11-36dc-41ef-8c4e-804d38858cf0"/>
+			</line>
+			<line>
+				<reportElement x="814" y="-24" width="1" height="47" uuid="a44f48a7-2a81-43f3-be77-bcb28ba802cf"/>
+			</line>
+			<line>
+				<reportElement x="739" y="-24" width="1" height="47" uuid="a7b0381f-d9c8-47a9-a3fa-41f177a2ada4"/>
+			</line>
+			<line>
+				<reportElement x="686" y="-24" width="1" height="47" uuid="d9cf4f10-15f6-467d-8485-769ee83beb54"/>
+			</line>
+			<line>
+				<reportElement x="630" y="-24" width="1" height="47" uuid="9bbde9e8-5b79-452c-8bda-2c57afdd924f"/>
+			</line>
+			<line>
+				<reportElement x="559" y="-24" width="1" height="47" uuid="71c0fe50-a760-4798-8611-90217b4eaf1b"/>
+			</line>
+			<line>
+				<reportElement x="501" y="-24" width="1" height="47" uuid="88419b52-a145-4700-8957-98a18a49d52c"/>
+			</line>
+			<line>
+				<reportElement x="437" y="-24" width="1" height="47" uuid="7801967d-f42e-4f07-98b5-084b348b3b69"/>
+			</line>
+			<line>
+				<reportElement x="324" y="-24" width="1" height="47" uuid="0d878db9-ac9d-417a-a253-d7838639e107"/>
+			</line>
+			<line>
+				<reportElement x="262" y="-24" width="1" height="47" uuid="4a7d349b-6bf9-45dd-88f2-44002772b4ec"/>
+			</line>
+			<line>
+				<reportElement x="232" y="-24" width="1" height="47" uuid="a8ed11d2-0319-4fe2-83d0-c734ebf0582a"/>
+			</line>
+			<line>
+				<reportElement x="199" y="-24" width="1" height="47" uuid="9c237694-812d-498d-a796-aceedd190e8c"/>
+			</line>
+			<line>
+				<reportElement x="86" y="-24" width="1" height="47" uuid="1e2b3740-ec00-4ac7-8b1a-559bcb9c6e8b"/>
+			</line>
+			<line>
+				<reportElement x="29" y="-24" width="1" height="47" uuid="72ae46da-fc71-4d8e-900f-96c9bad8792d"/>
+			</line>
+			<textField>
+				<reportElement x="-4" y="0" width="32" height="23" uuid="be4e688a-dcc0-41f4-aae1-6615fe41c341"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="48" splitType="Stretch">
+			<line>
+				<reportElement x="-6" y="1" width="820" height="1" uuid="45e71121-025b-4a1b-b523-ae8990edc936"/>
+			</line>
+			<staticText>
+				<reportElement x="13" y="3" width="567" height="45" uuid="27fd48a8-d33d-4277-9a95-7ef68564e24a"/>
+				<textElement>
+					<font fontName="Calibri" size="7"/>
+				</textElement>
+				<text><![CDATA[FACSISTEL
+DIRECCIÓN: Vía La Libertad-Santa Elena
+Teléfonos: 04-2781732  ext 129
+Email: facsistel@upse.edu.ec
+www.facsistel.upse.edu.ec]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="711" y="4" width="100" height="10" uuid="75355a70-65e8-462a-a7e0-e351623936ec"/>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

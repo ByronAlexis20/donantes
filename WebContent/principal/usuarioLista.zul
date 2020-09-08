@@ -1,0 +1,38 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winUsuarioLista" ?>
+<zk>
+	<window id="winUsuarioLista" border="none" width="50%" height="80%"
+		apply="ec.edu.upse.controlador.UsuarioListaC">
+		<caption sclass="fn-caption" label="Lista Usuario" />
+		<vlayout vflex="1">
+			<hlayout hflex="1">
+				<textbox id="txtBuscar" hflex="1" />
+				<button id="btnBuscar" label="Buscar!"
+					iconSclass="z-icon-search" />
+			</hlayout>
+			<hlayout vflex="1" hflex="1">
+				<listbox id="lstUsuario"
+					model="@{winUsuarioLista$composer.usuario}" hflex="1" vflex="1"
+					selectedItem="@{winUsuarioLista$composer.usuarioSeleccionado}">
+					<listhead>
+						<listheader label="Cédula" />
+						<listheader label="Nombres" />
+						<listheader label="Perfil" />
+						<listheader label="Usuario" />
+					</listhead>
+					<template name="model">
+						<listitem >
+							<listcell label="${each.cedula}" />
+							<listcell
+								label="${each.nombres} ${each.apellidos}" />
+							<listcell label="${each.segPerfil.nombre}" />
+							<listcell label="${each.usuario}" />
+						</listitem>
+					</template>
+				</listbox>
+			</hlayout>
+			<hlayout hflex="1">
+				<button id="btnSalir" label="Salir"/>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>

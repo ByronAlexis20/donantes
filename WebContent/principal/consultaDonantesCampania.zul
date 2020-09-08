@@ -1,0 +1,75 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winReporteCampania" ?>
+<zk>
+	<window id="winReporteCampania" border="none"
+		apply="ec.edu.upse.controlador.ConsultaDonantesCampaniaC" vflex="1" hflex="1" >
+		<vlayout vflex="1" hflex="1">
+			<hlayout>
+				<vlayout>
+					<grid style="background-color: transparent;">
+						<columns
+							style="background-color: transparent;">
+							<column />
+							<column />
+							<column />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<cell width="16%">
+									Elija Campaña:
+								</cell>
+								<cell width="50%">
+									<combobox id="cboCampania"
+										model="@{winReporteCampania$composer.listaCampania}" width="100%" readonly="true">
+										<template name="model">
+											<comboitem
+												label="${each.nombreCampania} - ${each.lugar}" />
+										</template>
+									</combobox>
+								</cell>
+								<cell width="min">
+									<button id="btnBuscar"
+										label="Buscar"  />
+								</cell>
+								<cell width="min">
+									<button id="btnImprimir"
+										label="Imprimir"  />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</vlayout>
+			</hlayout>
+			<hlayout vflex="1" hflex="1">
+				<listbox id="lstDonantes"
+					model="@{winReporteCampania$composer.donante}" hflex="1"
+					vflex="1">
+					<listhead>
+						<listheader label="No" width="25px" />
+						<listheader label="Nombres" />
+						<listheader label="Ciudad" />
+						<listheader label="Dirección" />
+						<listheader label="Teléfono" />
+						<listheader label="Tipo Sangre" />
+						<listheader label="Estado" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${each.idPersona}" />
+							<listcell
+								label="${each.apellido} ${each.nombre}" />
+							<listcell
+								label="${each.parametricaCanton.descripcion}" />
+							<listcell label="${each.direccion}" />
+							<listcell
+								label="${each.telefono} - ${each.celular}" />
+							<listcell
+								label="${each.parametricaSangre.descripcion}" />
+							<listcell label="${each.estado}" />
+						</listitem>
+					</template>
+				</listbox>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>

@@ -1,0 +1,50 @@
+<?page title="Lista de Equipos" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winCampaniaLista" ?>
+<zk>
+	<style>
+		.ban { font: 150% sans-serif; background:transparent;}
+	</style>
+	<div id="winCampaniaLista" hflex="1" vflex="1" apply="ec.edu.upse.controlador.CampaniaListaC">
+		<vlayout vflex="1">
+			<hlayout  hflex="1">
+				<div align="center" hflex="1" vflex="1">
+					<label value="Campañas Realizadas" sclass="ban" />
+				</div>
+			</hlayout>
+			<hlayout  hflex="1">
+				<textbox id="txtBuscar" hflex="1" />
+				<button id="btnBuscar" label="Buscar!"
+					iconSclass="z-icon-search" />
+			</hlayout>
+			<hlayout vflex="1" hflex="1">
+				<listbox id="lstCampania" model="@{winCampaniaLista$composer.campania}" hflex="1" vflex="1"
+				selectedItem="@{winCampaniaLista$composer.campaniaSeleccionado}">
+					<listhead>
+						<listheader label="Nombre de Campaña"/>
+						<listheader label="Lugar"/>
+						<listheader label="Fecha"/>
+						<listheader label="Horario"/>
+						<listheader label="Estado"/>
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${each.nombreCampania}" />
+							<listcell label="${each.lugar}" />
+							<listcell label="${each.fecha}" />
+							<listcell label="${each.horario}" />
+							<listcell label="${each.estadoCampania}" />
+						</listitem>
+					</template>
+				</listbox>
+			</hlayout>
+			<hlayout hflex="1" height="1">
+				<div align="center" hflex="1">
+					<button id="btnNuevo" label="Nuevo" width="100px" image="/recursos/img/6.nuevo.png" height="35px"/>
+					<button id="btnEditar" label="Editar" width="100px" image="/recursos/img/9.editar.png" height="35px"/>			
+					<button id="btnEliminar" label="Eliminar" width="100px" image="/recursos/img/8.eliminar.png" height="35px"/>
+					<button id="btnImprimir" label="Imprimir" width="100px" height="35px"/>
+				</div>
+			</hlayout>
+		</vlayout>
+	</div>
+</zk>

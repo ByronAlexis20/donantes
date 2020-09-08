@@ -1,0 +1,63 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winCampaniaEditar" ?>
+<zk>
+	<window id="winCampaniaEditar" border="normal" vflex="min" width="37%"
+		 apply="ec.edu.upse.controlador.CampaniaEditar">
+		<caption sclass="fn-caption"
+			label="CAMPAÑAS" />
+		<vlayout>
+			<grid hflex="1">
+				<columns>
+					<column align="right" hflex="min" />
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<cell>Nombre Campaña :</cell>
+						<cell>
+							<textbox id="txtNombreCampania"
+								value="@{winCampaniaEditar$composer.campania.nombreCampania}" width="100%"/>
+						</cell>
+					</row>
+					<row>
+						<cell sclass="row-title">Lugar:</cell>
+						<cell>
+							<textbox id="txtLugar"
+								value="@{winCampaniaEditar$composer.campania.lugar}" width="100%"/>
+						</cell>
+					</row>
+					<row>
+						<cell sclass="row-title">Fecha :</cell>
+						<cell>
+							<datebox id="dtpFecha" width="100%"/>
+						</cell>
+					</row>
+					<row>
+						<cell sclass="row-title">Horario:</cell>
+						<cell>
+							<textbox id="txtHorario"
+							value="@{winCampaniaEditar$composer.campania.horario}" width="100%"/>
+						</cell>
+					</row>
+					<row id="rowEstadoCampaña">
+						<cell sclass="row-title">Estado de Campaña:</cell>
+						<cell>
+							<combobox id="cboEstadoCampania"
+									model="@{winCampaniaEditar$composer.estadoCampania}" width="100%">
+									<template name="model">
+										<comboitem
+											label="${each.descripcion}" />
+									</template>
+								</combobox>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hlayout hflex="1" height="1">
+				<div align="center" hflex="1">
+					<button id="btnGrabar" label="Grabar"/>
+					<button id="btnSalir" label="Salir"/>			
+				</div>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>

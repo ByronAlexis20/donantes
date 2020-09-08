@@ -1,0 +1,50 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winDestinatarioLista" ?>
+<zk>
+	<window id="winDestinatarioLista" border="none" width="60%" height="80%" title="Lista Destinatarios"
+		apply="ec.edu.upse.controlador.DestinatariosLista">
+		<vlayout vflex="1" hflex="1">
+			<hlayout hflex="1">
+				<label value="Provincia" />
+				<combobox id="cboProvincia"
+					model="@{winDestinatarioLista$composer.provincias}"
+					readonly="true">
+					<template name="model">
+						<comboitem label="${each.descripcion}" />
+					</template>
+				</combobox>
+				<textbox id="txtBuscar" hflex="1" />
+				<button id="btnBuscar" label="Buscar!"
+					iconSclass="z-icon-search" />
+			</hlayout>
+			<hlayout vflex="1" hflex="1">
+				<listbox id="lstDonantes" hflex="1" vflex="1">
+					<listhead>
+						
+						<listheader label="Cédula" />
+						<listheader label="Nombres" />
+						<listheader label="Tipo de Sangre" />
+						<listheader label="Correo" />
+						<listheader label="Ciudad" />
+
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${each.cedula}" />
+							<listcell label="${each.apellido} ${each.nombre}" />
+							<listcell label="${each.parametricaSangre.descripcion}" />
+							<listcell label="${each.email}" />
+							<listcell label="${each.parametricaCanton.descripcion}" />
+						</listitem>
+					</template>
+				</listbox>
+			</hlayout>
+			<hlayout hflex="1">
+				<button id="btnSalir" label="Salir" iconSclass="z-icon-sign-out" />
+				<button id="btnAceptar" label="Aceptar" iconSclass="z-icon-check"  />
+				<label value="Seleccionados: "/>
+				<label id="lblNumSeleccionados"/>
+			</hlayout>
+			
+		</vlayout>
+	</window>
+</zk>

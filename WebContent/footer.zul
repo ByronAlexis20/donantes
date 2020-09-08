@@ -1,0 +1,5 @@
+<hlayout hflex="1" vflex="1" valign="center">
+	<div align="center" hflex="1" vflex="1" >
+		<label value="Facultad de ciencias sociales y de la salud" style="font-size:12px;"/>
+	</div>
+</hlayout>

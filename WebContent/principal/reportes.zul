@@ -1,0 +1,9 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="new page title" border="none">
+<vlayout>
+<button label="Listadode Donantes po Campaña" id="btnListadoCampania"/>
+<button label="Reporte estadistico" id="btnEstadistico"/>
+</vlayout>
+</window>
+</zk>

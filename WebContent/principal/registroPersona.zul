@@ -1,0 +1,211 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winRegistro" ?>
+<zk>
+	<window id="winRegistro" style="background-color: transparent;"
+		border="none" hflex="1" vflex="1"
+		apply="ec.edu.upse.controlador.RegistroPersonaC">
+		<vlayout hflex="1" vflex="1">
+			<separator orient="vertical" height="40%" />
+			<hlayout>
+				<div align="center" hflex="1">
+					<label value="Registro de donantes"
+						style="font-size:20px" />
+				</div>
+			</hlayout>
+			<hlayout hflex="1">
+				<grid style="background-color: transparent;"
+					hflex="1">
+					<columns style="background-color: transparent;">
+						<column align="right" hflex="min" />
+						<column />
+						<column align="right" hflex="min" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell sclass="row-title">Cédula:</cell>
+							<cell>
+								<textbox id="txtCedula" width="90%" maxlength="10" xmlns:w="client">
+									<attribute w:name="doKeyDown_"><![CDATA[
+									function (evt) {
+										var keyCode = event.keyCode;
+										if( keyCode == 8 // back space
+											|| keyCode == 13 // enter
+											|| keyCode == 16 // enter
+											|| (keyCode >= 35 && keyCode <= 40) // home, end, arrows
+											|| keyCode == 46) { // Delete
+											this.$doKeyDown_(evt);
+										} else if ( !evt.shiftKey &&  // only do without shift key
+											(keyCode >= 48 && keyCode <= 57)
+											|| (keyCode >= 96 && keyCode <= 105)) {// number range
+											this.$doKeyDown_(evt);
+										} else {
+											evt.stop();
+											return;
+										}
+									}
+								]]></attribute>
+								</textbox>
+							</cell>
+							<cell sclass="row-title">Teléfono:</cell>
+							<cell>
+								<textbox id="txtTelefono" width="90%" maxlength="10" xmlns:w="client">
+								<attribute w:name="doKeyDown_"><![CDATA[
+									function (evt) {
+										var keyCode = event.keyCode;
+										if( keyCode == 8 // back space
+											|| keyCode == 13 // enter
+											|| keyCode == 16 // enter
+											|| (keyCode >= 35 && keyCode <= 40) // home, end, arrows
+											|| keyCode == 46) { // Delete
+											this.$doKeyDown_(evt);
+										} else if ( !evt.shiftKey &&  // only do without shift key
+											(keyCode >= 48 && keyCode <= 57)
+											|| (keyCode >= 96 && keyCode <= 105)) {// number range
+											this.$doKeyDown_(evt);
+										} else {
+											evt.stop();
+											return;
+										}
+									}
+								]]></attribute>
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">Nombres:</cell>
+							<cell>
+								<textbox id="txtNombres" width="90%" />
+							</cell>
+							<cell sclass="row-title">Celular:</cell>
+							<cell>
+								<textbox id="txtCelular" width="90%" maxlength="10" xmlns:w="client">
+								<attribute w:name="doKeyDown_"><![CDATA[
+									function (evt) {
+										var keyCode = event.keyCode;
+										if( keyCode == 8 // back space
+											|| keyCode == 13 // enter
+											|| keyCode == 16 // enter
+											|| (keyCode >= 35 && keyCode <= 40) // home, end, arrows
+											|| keyCode == 46) { // Delete
+											this.$doKeyDown_(evt);
+										} else if ( !evt.shiftKey &&  // only do without shift key
+											(keyCode >= 48 && keyCode <= 57)
+											|| (keyCode >= 96 && keyCode <= 105)) {// number range
+											this.$doKeyDown_(evt);
+										} else {
+											evt.stop();
+											return;
+										}
+									}
+								]]></attribute>
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">Apellidos:</cell>
+							<cell>
+								<textbox id="txtApellidos" width="90%" />
+							</cell>
+							<cell sclass="row-title">
+								Fecha Nacimiento:
+							</cell>
+							<cell>
+								<datebox id="dtpFecha" width="90%" readonly="true"/>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">Email:</cell>
+							<cell>
+								<textbox id="txtEmail" width="90%" />
+							</cell>
+							<cell sclass="row-title">Género :</cell>
+							<cell>
+								<combobox id="cboGenero" width="90%"
+									model="@{winRegistro$composer.genero}" readonly="true">
+									<template name="model">
+										<comboitem
+											label="${each.descripcion}" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">Dirección :</cell>
+							<cell>
+								<textbox id="txtDireccion" width="90%" />
+							</cell>
+							<cell sclass="row-title">
+								Grupo Sanguineo :
+							</cell>
+							<cell>
+								<combobox id="cboGrupoSanguineo"
+									width="90%" model="@{winRegistro$composer.grupoSanguineo}"
+									readonly="true">
+									<template name="model">
+										<comboitem
+											label="${each.descripcion}" />
+									</template>
+								</combobox>
+							</cell>
+
+						</row>
+						<row>
+							<cell sclass="row-title">Tatuaje :</cell>
+							<cell>
+								<combobox id="cboTatuaje" width="90%"
+									model="@{winRegistro$composer.tatuajes}" readonly="true">
+									<template name="model">
+										<comboitem
+											label="${each.descripcion}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell sclass="row-title">Provincia :</cell>
+							<cell>
+								<combobox id="cboProvincia" width="90%"
+									model="@{winRegistro$composer.provincias}" readonly="true">
+									<template name="model">
+										<comboitem
+											label="${each.descripcion}" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">
+								Fecha del tatuaje :
+							</cell>
+							<cell>
+								<datebox id="dtpFechaTatuaje"
+									width="90%" />
+							</cell>
+							<cell sclass="row-title">Ciudad :</cell>
+							<cell>
+								<combobox id="cboCiudad" width="90%"
+									model="@{winRegistro$composer.ciudades}" readonly="true">
+									<template name="model">
+										<comboitem
+											label="${each.descripcion}" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</hlayout>
+			<hbox hflex="1" height="1" pack="center">
+				<div align="center">
+					<button id="btnRegistrar" label="Registrar Donación"
+						height="35px" />
+				</div>
+				<div>
+					<label id="lblAviso" width="50%" />
+				</div>
+				<div align="center">
+					<button id="btnNuevo" label="Nuevo" height="35px" />
+					<button id="btnGrabar" label="Grabar" height="35px" />
+				</div>
+			</hbox>
+		</vlayout>
+	</window>
+</zk>

@@ -1,0 +1,89 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winRegistroUsuario" ?>
+<zk>
+	<window id="winRegistroUsuario" style="background-color: transparent;"
+		border="none" hflex="1" vflex="1"
+		apply="ec.edu.upse.controlador.UsuarioRegistroC">
+		<vlayout hflex="1">
+			<separator orient="vertical" height="40%"/>
+			<hlayout>
+				<div align="center" hflex="1">
+					<label value="Registro de usuarios del sistema" style="font-size:20px"/>
+				</div>
+			</hlayout>
+			<hlayout>
+				<grid style="background-color: transparent;">
+					<columns style="background-color: transparent;">
+						<column align="right" hflex="min" />
+						<column />
+						<column align="right" hflex="min" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell sclass="row-title">Cédula:</cell>
+							<cell>
+								<textbox id="txtCedula" />
+								<separator orient="vertical" width="5%"/>
+								<button id="btnBuscarUsuario" iconSclass="z-icon-search"/>
+							</cell>
+							<cell sclass="row-title">Teléfono:</cell>
+							<cell>
+								<hbox pack="end">
+								<textbox id="txtTelefono" />
+								<checkbox id="chkEstado"/>
+								<label>Estado</label>
+								</hbox>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">Nombres:</cell>
+							<cell>
+								<textbox id="txtNombres" width="90%" />
+							</cell>
+							<cell sclass="row-title">Apellidos:</cell>
+							<cell>
+								<textbox id="txtApellidos" width="90%" />
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">Usuario:</cell>
+							<cell>
+								<textbox id="txtUsuario" width="90%" />
+							</cell>
+							<cell sclass="row-title">
+								Perfil:
+							</cell>
+							<cell>
+								<combobox id="cboPerfil" width="90%"
+									model="@{winRegistroUsuario$composer.perfiles}" readonly="true">
+									<template name="model">
+										<comboitem
+											label="${each.nombre}" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">Clave:</cell>
+							<cell>
+								<textbox id="txtClave" width=" 90%" name="password" type="password" />
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">Observacion :</cell>
+							<cell colspan="3">
+								<textbox id="txtObservacion" width="100%"/>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</hlayout>
+			<hlayout hflex="1" height="1">
+				<div align="center" height="min">
+					<button id="btnLimpiar" label="Limpiar" height="35px" />
+					<button id="btnGrabar" label="Grabar" height="35px" />
+				</div>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>

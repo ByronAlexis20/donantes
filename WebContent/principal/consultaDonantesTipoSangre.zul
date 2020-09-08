@@ -1,0 +1,90 @@
+<?page title="Lista de Equipos" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winConsultaDonantes" ?>
+<zk>
+	<style>
+		.ban { font: 150% sans-serif; background:transparent;}
+	</style>
+	<window id="winConsultaDonantes" hflex="1" vflex="1"
+		apply="ec.edu.upse.controlador.ConsultaDonantesTipoSangreC">
+		<vlayout vflex="1">
+			<hlayout hflex="1">
+				<vlayout>
+					<label value="Provincia" />
+					<combobox id="cboProvincia"
+						model="@{winConsultaDonantes$composer.provincias}" readonly="true">
+						<template name="model">
+							<comboitem label="${each.descripcion}" />
+						</template>
+					</combobox>
+				</vlayout>
+				<vlayout>
+					<label value="Ciudad" />
+					<combobox id="cboCiudad"
+						model="@{winConsultaDonantes$composer.ciudades}" readonly="true">
+						<template name="model">
+							<comboitem label="${each.descripcion}" />
+						</template>
+					</combobox>
+				</vlayout>
+				<vlayout>
+					<label value="Grupo Sanguineo" />
+					<combobox id="cboGrupoSanguineo"
+						model="@{winConsultaDonantes$composer.grupoSanguineo}" readonly="true">
+						<template name="model">
+							<comboitem label="${each.descripcion}" />
+						</template>
+					</combobox>
+				</vlayout>
+				<vlayout>
+				<div align="center">
+				<vbox>
+					<button id="btnBuscar" label="Buscar!"
+						iconSclass="z-icon-search" />
+						<checkbox id="chkAll" label="Aptos y No Aptos"/>
+						</vbox>
+				</div>
+						
+				</vlayout>
+				<vlayout>
+				<div align="center">
+				<vbox pack="center">
+					<button id="btnImprimir" label="Imprimir"/>
+				</vbox>
+				</div>
+						
+				</vlayout>
+			</hlayout>
+			<hlayout vflex="1" hflex="1">
+				<listbox id="lstDonantes"
+					model="@{winConsultaDonantes$composer.donante}" hflex="1"
+					vflex="1">
+					<listhead>
+						<listheader label="No" width="25px"/>
+						<listheader label="Nombres" />
+						<listheader label="Ciudad" />
+						<listheader label="Email" />
+						<listheader label="Teléfono" />
+						<listheader label="Tipo Sangre" />
+						<listheader label="Estado" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell
+								label="${each.idPersona}" />
+							<listcell
+								label="${each.apellido} ${each.nombre}" />
+							<listcell
+								label="${each.parametricaCanton.descripcion}" />
+							<listcell label="${each.email}" />
+							<listcell
+								label="${each.telefono} - ${each.celular}" />
+							<listcell
+								label="${each.parametricaSangre.descripcion}" />
+							<listcell label="${each.estado}" />
+						</listitem>
+					</template>
+				</listbox>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>

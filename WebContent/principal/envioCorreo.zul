@@ -1,0 +1,59 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winEnvioCorreos" ?>
+<zk>
+	<window id="winEnvioCorreos"
+		style="background-color: transparent;" border="none" hflex="1"
+		vflex="1" apply="ec.edu.upse.controlador.EnvioCorreo">
+		<vlayout hflex="1">
+			<separator orient="vertical" height="40%" />
+			<hlayout>
+				<div align="center" hflex="1">
+					<label value="Aviso de nueva campaña"
+						style="font-size:20px" />
+				</div>
+			</hlayout>
+			<hlayout>
+				<grid style="background-color: transparent;">
+					<columns style="background-color: transparent;">
+						<column align="right" hflex="min" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell sclass="row-title">Destinatario:</cell>
+							<cell>
+								<textbox id="txDestinatario" width="94.5%" readonly="true"/>
+								<separator orient="vertical" width="1%" />
+								<button id="btnBuscarDestinat"
+									iconSclass="z-icon-search" />
+							</cell>
+						</row>
+						
+						<row>
+							<cell sclass="row-title">Asunto:</cell>
+							<cell>
+								<textbox id="txtAsunto" width="100%" />
+							</cell>
+						</row>
+						
+						<row>
+							<cell sclass="row-title">Cuerpo:</cell>
+							<cell>
+								<textbox id="txtCuerpo" width="100%" multiline="true" height="100px"/>
+							</cell>
+						</row>
+						
+					</rows>
+				</grid>
+			</hlayout>
+			<hlayout hflex="1" height="1">
+				<div align="center" height="min">
+					<button id="btnEnviar" label="Enviar"
+						height="35px" iconSclass="z-icon-envelope" />
+					<button id="upload" label="Adjuntar" height="35px"
+						iconSclass="z-icon-paperclip" upload="true"  />
+						<label id="lblNombreArchivo" value="Sin archivo"/>
+				</div>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>

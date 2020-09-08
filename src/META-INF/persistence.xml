@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="donantes">
+		<class>ec.edu.upse.modelo.Campania</class>
+		<class>ec.edu.upse.modelo.Empresa</class>
+		<class>ec.edu.upse.modelo.Parametrica</class>
+		<class>ec.edu.upse.modelo.Persona</class>
+		<class>ec.edu.upse.modelo.RegistroDonacion</class>
+		<class>ec.edu.upse.modelo.SegAuditoria</class>
+		<class>ec.edu.upse.modelo.SegMenu</class>
+		<class>ec.edu.upse.modelo.SegPerfil</class>
+		<class>ec.edu.upse.modelo.SegPermiso</class>
+		<class>ec.edu.upse.modelo.SegUsuario</class>
+		<class>ec.edu.upse.modelo.PermisoCampania</class>
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/donantes"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value="tricampeon2015"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+		</properties>
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,52 @@
+<zk>
+	<hbox vflex="1" hflex="1" align="center" pack="center"
+		spacing="20px" style="background-color: #A4A4A4;">
+		<div
+			style="background-color:  rgba(255, 255, 255, 0.8); border-radius: 5px 5px 5px 5px;"
+			width="300px">
+			<h:form id="f" name="f" action="j_spring_security_check"
+				method="POST" xmlns:h="native">
+
+				<vbox hflex="1" vflex="1" align="center">
+					<separator orient="vertical" width="15px" />
+					<hbox align="center" >
+						<image src="/recursos/img/ic_logo_facsistel.png"
+							width="120px" />
+					</hbox>
+					<separator orient="vertical" width="20px" />
+					<!-- Formulario para autenticacion -->
+					<hbox align="center">
+						<vbox>
+							<label value="Usuario" width="100px" />
+							<textbox id="u" name="username"
+								width="200px" />
+						</vbox>
+					</hbox>
+					<hbox align="center">
+						<vbox>
+							<label value="Clave" width="100px" />
+							<textbox id="p" name="password"
+								type="password" width="200px" />
+						</vbox>
+					</hbox>
+					<hbox>
+						Recorderme:
+						<checkbox id="r"
+							name="_spring_security_remember_me" />
+					</hbox>
+					<html>
+						<input type="hidden"
+							name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</html>
+					<!-- Procesa el login -->
+					<button sclass="btn-primary" id="login" label="Login" type="submit" />
+					<separator orient="vertical" width="30px" />
+					<html style="color:red"
+						if="${not empty param.login_error}">
+						<![CDATA[ Usuario o clave incorrecto!!.]]>
+						</html>
+				</vbox>
+			</h:form>
+		</div>
+	</hbox>
+</zk>

@@ -1,0 +1,61 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./winRegistroDonacion" ?>
+<zk>
+	<window id="winRegistroDonacion" title="Registo de Donaciones"
+		border="normal" width="60%" apply="ec.edu.upse.controlador.RegistroDonacionC">
+		<vlayout>
+			<hlayout>
+				<grid style="background-color: transparent;">
+					<columns style="background-color: transparent;">
+						<column align="right" hflex="min" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell sclass="row-title">
+								Elija Campaña:
+							</cell>
+							<cell>
+								<combobox id="cboCampania"
+									width="90%" model="@{winRegistroDonacion$composer.listaCampania}" readonly="true">
+									<template name="model">
+										<comboitem
+											label="${each.nombreCampania} - ${each.lugar}" />
+									</template>
+									</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">
+								Captado por:
+							</cell>
+							<cell>
+								<combobox id="cboCaptado"
+									width="90%" model="@{winRegistroDonacion$composer.listaCaptado}" readonly="true">
+									<template name="model">
+										<comboitem
+											label="${each.descripcion}" />
+									</template>
+									</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell sclass="row-title">
+								Observaciones :
+							</cell>
+							<cell>
+								<textbox id="txtObservaciones" width="90%" 
+								value="@{winRegistroDonacion$composer.donacion.observacion}"/>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</hlayout>
+			<hlayout>
+				<div align="center">
+					<button id="btnGrabar" label="Grabar" height="35px" />
+					<button id="btnCancelar" label="Cancelar" height="35px" />
+				</div>
+			</hlayout>
+		</vlayout>
+	</window>
+</zk>
